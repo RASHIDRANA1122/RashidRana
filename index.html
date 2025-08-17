@@ -1,0 +1,167 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width,initial-scale=1" />  
+  <title>Jazz Offer Activation (Demo)</title>  
+  <style>  
+    :root{  
+      --bg:#ffffff;  
+      --text:#0f172a;  
+      --muted:#64748b;  
+      --primary:#2563eb;  
+      --primary-weak:#e0e7ff;  
+      --success:#16a34a;  
+      --card:#f8fafc;  
+      --border:#e2e8f0;  
+    }  
+    *{box-sizing:border-box}  
+    body{  
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial;  
+      background:var(--bg); color:var(--text);  
+    }  
+    .wrap{max-width:720px;margin:32px auto;padding:16px}  
+    .header{  
+      display:flex;align-items:center;gap:10px;margin-bottom:16px  
+    }  
+    .header a{color:#2563eb;text-decoration:none;font-weight:600}  
+    .card{  
+      background:var(--card); border:1px solid var(--border);  
+      border-radius:16px; padding:24px; box-shadow:0 4px 18px rgba(0,0,0,.06);  
+    }  
+    h1{margin:0 0 16px 0; color:#0ea5e9; letter-spacing:.2px}  
+    label{display:block; font-weight:600; margin:14px 0 8px}  
+    input[type="tel"]{  
+      width:100%; padding:14px 16px; border:1px solid var(--border);  
+      border-radius:12px; font-size:16px; background:#fff; color:var(--text);  
+    }  
+    .hint{font-size:13px;color:var(--muted);margin-top:6px}  
+    .opts{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 18px}  
+    .opt{  
+      display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);  
+      border-radius:12px;background:#fff;cursor:pointer;  
+    }  
+    .opt input{accent-color:var(--primary)}  
+    .btn{  
+      width:100%; padding:14px 18px; font-size:16px; font-weight:700;  
+      border:0; border-radius:12px; background:var(--primary); color:#fff; cursor:pointer;  
+      transition:transform .02s ease-in-out,opacity .2s;  
+    }  
+    .btn:active{transform:scale(.995)}  
+    .status{  
+      margin-top:18px; display:none;  
+    }  
+    .info, .ok{  
+      border-radius:14px; padding:16px 18px; color:#fff; margin-top:12px; font-weight:600  
+    }  
+    .info{background:#1d4ed8}  
+    .ok{background:var(--success)}  
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}  
+    .small{font-size:14px;font-weight:500}  
+    .toast{  
+      position:fixed; left:50%; top:16px; transform:translateX(-50%);  
+      background:#111827; color:#fff; padding:10px 14px; border-radius:999px; font-size:14px;  
+      box-shadow:0 10px 30px rgba(0,0,0,.2); display:none;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div class="wrap">  
+    <div class="header">  
+      <a href="javascript:history.back()">← Index</a>  
+    </div>  <div class="card">  
+  <h1>Jazz Offer</h1>  
+
+  <label for="msisdn">Enter MSISDN</label>  
+  <input id="msisdn" type="tel" inputmode="numeric" autocomplete="tel"  
+         placeholder="0300XXXXXXX" maxlength="13" />  
+    
+  <label>Select Offer:</label>  
+  <div class="opts">  
+    <label class="opt"><input type="radio" name="offer" value="100 Day Call"> 100 Day Call</label>  
+    <label class="opt"><input type="radio" name="offer" value="Monthly Freedom" checked> Monthly Freedom</label>  
+  </div>  
+
+  <button class="btn" id="activate">Activate Offer</button>  
+
+  <div class="status" id="statusWrap">  
+    <div class="info" id="infoBox">  
+      <span id="infoText">Total <b>5GB</b> Activated for <span class="mono" id="forNum">923021308001</span></span>  
+    </div>  
+    <div class="ok small">✓ Status: Your request has been successfully received</div>  
+  </div>  
+</div>
+
+  </div>    <div class="toast" id="toast">Processing…</div>    <script>  
+    const tel = document.getElementById('msisdn');  
+    const btn = document.getElementById('activate');  
+    const statusWrap = document.getElementById('statusWrap');  
+    const infoText = document.getElementById('infoText');  
+    const forNum = document.getElementById('forNum');  
+    const toast = document.getElementById('toast');  
+  
+    // Normalize input as user types  
+    tel.addEventListener('input', () => {  
+      tel.value = tel.value.replace(/[^\d+]/g,''); // keep digits/+ only  
+    });  
+  
+    function showToast(txt){  
+      toast.textContent = txt;  
+      toast.style.display = 'block';  
+      setTimeout(()=>toast.style.display='none', 1500);  
+    }  
+  
+    function normalizeMsisdn(raw){  
+      raw = String(raw).trim();  
+      // If starts with +92 or 92, convert to local 0xxxxxxxxxx  
+      if (/^\+?92/.test(raw)) {  
+        const rest = raw.replace(/^\+?92/, '');  
+        return '0' + rest.replace(/^0+/, '').slice(0,10);  
+      }  
+      // If already 03xxxxxxxxx keep 11 digits  
+      if (/^03\d{9}$/.test(raw)) return raw;  
+      // If user pasted random digits, try to coerce last 10 after leading 0  
+      const only = raw.replace(/\D/g,'');  
+      if (only.length === 12 && only.startsWith('92')) return '0' + only.slice(2);  
+      if (only.length === 11 && only.startsWith('03')) return only;  
+      return null;  
+    }  
+  
+    function validateLocal(msisdn){  
+      return /^03\d{9}$/.test(msisdn);  
+    }  
+  
+    btn.addEventListener('click', async () => {  
+      const selected = document.querySelector('input[name="offer"]:checked')?.value || '';  
+      const normalized = normalizeMsisdn(tel.value);  
+  
+      if (!normalized || !validateLocal(normalized)) {  
+        showToast('Invalid number. Use format 03XXXXXXXXX');  
+        tel.focus();  
+        return;  
+      }  
+  
+      showToast('Submitting…');  
+  
+      // DEMO result (random success text)  
+      await new Promise(r => setTimeout(r, 700)); // fake delay  
+  
+      // TODO: call your backend  
+      // Example:  
+      // const res = await fetch('/api/activate', {  
+      //   method:'POST',  
+      //   headers:{'Content-Type':'application/json'},  
+      //   body: JSON.stringify({ msisdn: normalized, offer: selected })  
+      // });  
+      // const data = await res.json();  
+  
+      // Build demo message  
+      const intl = '92' + normalized.slice(1); // 923xxxxxxxxx  
+      forNum.textContent = intl;  
+      infoText.innerHTML = `Total <b>5GB</b> Activated for <span class="mono">${intl}</span> (${selected})`;  
+  
+      statusWrap.style.display = 'block';  
+      showToast('Done');  
+    }); 
+  </script>  </body>  
+</html>  
+
