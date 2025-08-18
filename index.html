@@ -1,1 +1,60 @@
-jj
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Tamasha Subscription</title>
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:radial-gradient(circle at top left,#1e3a8a,#0f172a 70%);
+    display:flex;justify-content:center;align-items:center;height:100vh;color:#e5e7eb;
+    overflow:hidden; /* no scrolling */
+}
+.container{
+    background:rgba(17,24,39,.9);
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 0 25px rgba(0,200,255,.4),0 0 80px rgba(0,200,255,.2) inset;
+    width:360px;text-align:center;position:relative;
+    animation:fadeIn 1s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+h2{margin:0 0 15px;color:#fff;font-size:22px}
+input{
+    width:90%;padding:12px;border-radius:8px;border:1px solid #38bdf8;margin:8px 0;
+    background:#0f172a;color:#e5e7eb;text-align:center;font-size:16px;
+}
+button,a.btn-wa{
+    display:inline-block;width:90%;padding:12px;margin-top:12px;
+    border:none;border-radius:8px;font-weight:600;text-align:center;
+    cursor:pointer;transition:.2s;box-shadow:0 0 12px rgba(0,200,255,.3);
+    text-decoration:none;
+}
+button{background:#3b82f6;color:white}
+button:hover{background:#2563eb}
+a.btn-wa{background:#10b981;color:white}
+a.btn-wa:hover{background:#059669}
+.radio-group{text-align:left;margin:12px 0}
+.radio-group label{display:block;margin:8px 0}
+.result{margin-top:15px;word-break:break-word;font-size:14px;text-align:left;background:#0f172a;padding:10px;border-radius:8px}
+.res-title{color:#38bdf8;font-weight:bold;margin-bottom:5px}
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Tamashas Subscription</h2>
+    <form method="post">
+        <input type="tel" name="msisdn" pattern="[0-9]{10,11}" maxlength="11" placeholder="Enter MSISDN (10-11 digits)" required>
+        <div class="radio-group">
+            <label><input type="radio" name="package_id" value="1" required> Daily</label>
+            <label><input type="radio" name="package_id" value="2" checked> Weekly</label>
+            <label><input type="radio" name="package_id" value="3"> Monthly</label>
+        </div>
+                    <button type="submit">Process</button>
+                <a href="https://whatsapp.com/channel/0029VbB8dAz1NCrbfoEsgB0N" target="_blank" class="btn-wa">Join WhatsApp Channel</a>
+    </form>
+    </div>
+</body>
+</html>
