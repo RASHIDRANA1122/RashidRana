@@ -1,61 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Tamasha Subscription</title>
-<style>
-body{
-    margin:0;
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
-    background:radial-gradient(circle at top left,#1e3a8a,#0f172a 70%);
-    display:flex;justify-content:center;align-items:center;height:100vh;color:#e5e7eb;
-    overflow:hidden; /* no scrolling */
-}
-.container{
-    background:rgba(17,24,39,.9);
-    padding:30px;
-    border-radius:16px;
-    box-shadow:0 0 25px rgba(0,200,255,.4),0 0 80px rgba(0,200,255,.2) inset;
-    width:360px;text-align:center;position:relative;
-    animation:fadeIn 1s ease;
-}
-@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-h2{margin:0 0 15px;color:#fff;font-size:22px}
-input{
-    width:90%;padding:12px;border-radius:8px;border:1px solid #38bdf8;margin:8px 0;
-    background:#0f172a;color:#e5e7eb;text-align:center;font-size:16px;
-}
-button,a.btn-wa{
-    display:inline-block;width:90%;padding:12px;margin-top:12px;
-    border:none;border-radius:8px;font-weight:600;text-align:center;
-    cursor:pointer;transition:.2s;box-shadow:0 0 12px rgba(0,200,255,.3);
-    text-decoration:none;
-}
-button{background:#3b82f6;color:white}
-button:hover{background:#2563eb}
-a.btn-wa{background:#10b981;color:white}
-a.btn-wa:hover{background:#059669}
-.radio-group{text-align:left;margin:12px 0}
-.radio-group label{display:block;margin:8px 0}
-.result{margin-top:15px;word-break:break-word;font-size:14px;text-align:left;background:#0f172a;padding:10px;border-radius:8px}
-.res-title{color:#38bdf8;font-weight:bold;margin-bottom:5px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jazz Offer Activation (Demo)</title>
+  <style>
+    :root{
+      --bg:#ff0000; /* 🔴 Red background */
+      --text:#f9fafb;
+      --muted:#9ca3af;
+      --primary:#2563eb;
+      --success:#16a34a;
+      --card:#111827;
+      --border:#1f2937;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Arial;
+      background:var(--bg); color:var(--text);
+    }
+    .wrap{max-width:720px;margin:32px auto;padding:16px}
+    .header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .header a{color:#60a5fa;text-decoration:none;font-weight:600}
+    .card{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:24px; box-shadow:0 4px 18px rgba(0,0,0,.6);
+    }
+    h1{margin:0 0 16px 0; color:#38bdf8; letter-spacing:.2px}
+    label{display:block; font-weight:600; margin:14px 0 8px}
+    input[type="tel"]{
+      width:100%; padding:14px 16px; border:1px solid var(--border);
+      border-radius:12px; font-size:16px; background:#000; color:var(--text);
+      outline: none;
+    }
+    input[type="tel"].bad{border-color:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.2)}
+    .hint{font-size:13px;color:var(--muted);margin-top:6px}
+    .hint b{color:#ff0000;} /* 🔴 Date Red */
+    .opts{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 18px}
+    .opt{
+      display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);
+      border-radius:12px;background:#0f172a;cursor:pointer;color:var(--text);
+    }
+    .opt input{accent-color:var(--primary)}
+    .btn{
+      width:100%; padding:14px 18px; font-size:16px; font-weight:700;
+      border:0; border-radius:12px; background:var(--primary); color:#fff; cursor:pointer;
+    }
+    .btn:disabled{opacity:.6; cursor:not-allowed; filter:grayscale(30%)}
+    .status{margin-top:18px; display:none;}
+    .info, .ok, .error{
+      border-radius:14px; padding:16px 18px; color:#fff; margin-top:12px; font-weight:600
+    }
+    .info{background:#1d4ed8}
+    .ok{background:var(--success)}
+    .error{background:#dc2626}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+    .toast{
+      position:fixed; left:50%; top:16px; transform:translateX(-50%);
+      background:#111827; color:#fff; padding:10px 14px; border-radius:999px; font-size:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.6); display:none;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <h2>Tamashas Subscription</h2>
-    <form method="post">
-        <input type="tel" name="msisdn" pattern="[0-9]{10,11}" maxlength="11" placeholder="Enter MSISDN (10-11 digits)" required>
-        <div class="radio-group">
-            <label><input type="radio" name="package_id" value="1" required> Daily</label>
-            <label><input type="radio" name="package_id" value="2" checked> Weekly</label>
-            <label><input type="radio" name="package_id" value="3"> Monthly</label>
-        </div>
-                    <button type="submit">Process</button>
-                <a href="https://wa.me/message/XTCOEJ42NRU3L1" target="_blank" class="btn-wa">Join WhatsApp Channel</a>
-    </form>
+  <div class="wrap">
+    <div class="header">
+      <a href="javascript:history.back()">← Index</a>
     </div>
+    <div class="card">
+      <h1>Jazz Offer</h1>
+
+      <label for="msisdn">Enter MSISDN</label>
+      <input id="msisdn" type="tel" inputmode="numeric" autocomplete="tel"
+             placeholder="0300XXXXXXX" maxlength="13" />
+      <div class="hint"><b>DATE-<b>19-8-2025</b></div>
+
+      <label>Select Offer:</label>
+      <div class="opts">
+        <label class="opt">
+          <input type="radio" name="offer" value="100 Day Call">
+          100 Day Call
+        </label>
+      </div>
+
+      <button class="btn" id="activate" disabled>Activate Offer</button>
+
+      <div class="status" id="statusWrap">
+        <div class="info" id="infoBox" style="display:none">
+          <span id="infoText">Total <b>5GB</b> Activated for <span class="mono" id="forNum">923021308001</span></span>
+        </div>
+        <div class="ok small" id="okBox" style="display:none">
+          ✓ Status: Your request has been successfully received
+        </div>
+        <div class="error" id="errorBox" style="display:none">
+          ✗ Server Down OverLoad
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast">Processing…</div>
+
+  <script>
+    const tel = document.getElementById('msisdn');
+    const btn = document.getElementById('activate');
+    const statusWrap = document.getElementById('statusWrap');
+    const infoText = document.getElementById('infoText');
+    const forNum = document.getElementById('forNum');
+    const toast = document.getElementById('toast');
+    const errorBox = document.getElementById('errorBox');
+    const okBox = document.getElementById('okBox');
+    const infoBox = document.getElementById('infoBox');
+
+    function showToast(txt){
+      toast.textContent = txt;
+      toast.style.display = 'block';
+      setTimeout(()=>toast.style.display='none', 1500);
+    }
+
+    function normalizeMsisdn(raw){
+      raw = String(raw).trim();
+      if (/^\+?92/.test(raw)) {
+        const rest = raw.replace(/^\+?92/, '');
+        return '0' + rest.replace(/^0+/, '').slice(0,10);
+      }
+      if (/^03\d{9}$/.test(raw)) return raw;
+      const only = raw.replace(/\D/g,'');
+      if (only.length === 12 && only.startsWith('92')) return '0' + only.slice(2);
+      if (only.length === 11 && only.startsWith('03')) return only;
+      return null;
+    }
+
+    function validateLocal(msisdn){
+      return /^03\d{9}$/.test(msisdn);
+    }
+
+    function isOfferChecked(){
+      return !!document.querySelector('input[name="offer"]:checked');
+    }
+
+    tel.addEventListener('input', () => {
+      tel.value = tel.value.replace(/[^\d+]/g,'');
+      validateForm();
+    });
+
+    document.addEventListener('change', (e) => {
+      if (e.target.name === 'offer') validateForm();
+    });
+
+    function validateForm(){
+      const normalized = normalizeMsisdn(tel.value);
+      const valid = normalized && validateLocal(normalized);
+      tel.classList.toggle('bad', !valid && tel.value.trim().length>0);
+      btn.disabled = !(valid && isOfferChecked());
+      return { normalized, valid };
+    }
+
+    btn.addEventListener('click', async () => {
+      const { normalized, valid } = validateForm();
+      if (!valid) {
+        showToast('Invalid number. Use format 03XXXXXXXXX');
+        tel.focus();
+        return;
+      }
+      if (!isOfferChecked()){
+        showToast('Please select the offer first');
+        return;
+      }
+
+      showToast('Submitting…');
+      await new Promise(r => setTimeout(r, 800)); // delay
+
+      statusWrap.style.display = 'block';
+      errorBox.style.display = "none";
+      okBox.style.display = "none";
+      infoBox.style.display = "none";
+
+      // random choose success or overload
+      if (Math.random() < 0.5) {
+        // SUCCESS
+        const intl = '92' + normalized.slice(1);
+        forNum.textContent = intl;
+        infoBox.style.display = "block";
+        okBox.style.display = "block";
+        showToast('Done');
+      } else {
+        // ERROR
+        errorBox.style.display = "block";
+        showToast('Server Down OverLoad');
+      }
+    });
+  </script>
 </body>
 </html>
-
