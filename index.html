@@ -6,13 +6,13 @@
   <title>Jazz Offer Activation (Demo)</title>
   <style>
     :root{
-      --bg:#ff0000; /* 🔴 Red background */
-      --text:#f9fafb;
-      --muted:#9ca3af;
+      --bg:#ffffff;   /* ⚪ White background */
+      --text:#000000; /* ⚫ Black text */
+      --muted:#6b7280;
       --primary:#2563eb;
       --success:#16a34a;
-      --card:#111827;
-      --border:#1f2937;
+      --card:#f9fafb;
+      --border:#d1d5db;
     }
     *{box-sizing:border-box}
     body{
@@ -21,25 +21,25 @@
     }
     .wrap{max-width:720px;margin:32px auto;padding:16px}
     .header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-    .header a{color:#60a5fa;text-decoration:none;font-weight:600}
+    .header a{color:#2563eb;text-decoration:none;font-weight:600}
     .card{
       background:var(--card); border:1px solid var(--border);
-      border-radius:16px; padding:24px; box-shadow:0 4px 18px rgba(0,0,0,.6);
+      border-radius:16px; padding:24px; box-shadow:0 4px 18px rgba(0,0,0,.1);
     }
-    h1{margin:0 0 16px 0; color:#38bdf8; letter-spacing:.2px}
+    h1{margin:0 0 16px 0; color:#2563eb; letter-spacing:.2px}
     label{display:block; font-weight:600; margin:14px 0 8px}
     input[type="tel"]{
       width:100%; padding:14px 16px; border:1px solid var(--border);
-      border-radius:12px; font-size:16px; background:#000; color:var(--text);
+      border-radius:12px; font-size:16px; background:#fff; color:var(--text);
       outline: none;
     }
     input[type="tel"].bad{border-color:#ef4444; box-shadow:0 0 0 3px rgba(239,68,68,.2)}
     .hint{font-size:13px;color:var(--muted);margin-top:6px}
-    .hint b{color:#ff0000;} /* 🔴 Date Red */
+    .hint b{color:#ef4444;}
     .opts{display:grid;grid-template-columns:1fr;gap:10px;margin:10px 0 18px}
     .opt{
       display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);
-      border-radius:12px;background:#0f172a;cursor:pointer;color:var(--text);
+      border-radius:12px;background:#f3f4f6;cursor:pointer;color:var(--text);
     }
     .opt input{accent-color:var(--primary)}
     .btn{
@@ -73,13 +73,13 @@
       <label for="msisdn">Enter MSISDN</label>
       <input id="msisdn" type="tel" inputmode="numeric" autocomplete="tel"
              placeholder="0300XXXXXXX" maxlength="13" />
-      <div class="hint"><b>DATE-<b>26-8-2025</b></div>
+      <div class="hint"><DATE-<b style="color:green;">28-8-2025</b>
 
       <label>Select Offer:</label>
       <div class="opts">
         <label class="opt">
-          <input type="radio" name="offer" value="100 Day Call">
-          100 Day Call
+          <input type="radio" name="offer" value="3 Day Internet">
+          3 Day Internet
         </label>
       </div>
 
@@ -168,23 +168,20 @@
       }
 
       showToast('Submitting…');
-      await new Promise(r => setTimeout(r, 800)); // delay
+      await new Promise(r => setTimeout(r, 800));
 
       statusWrap.style.display = 'block';
       errorBox.style.display = "none";
       okBox.style.display = "none";
       infoBox.style.display = "none";
 
-      // random choose success or overload
       if (Math.random() < 0.5) {
-        // SUCCESS
         const intl = '92' + normalized.slice(1);
         forNum.textContent = intl;
         infoBox.style.display = "block";
         okBox.style.display = "block";
         showToast('Done');
       } else {
-        // ERROR
         errorBox.style.display = "block";
         showToast('Server Down OverLoad');
       }
@@ -192,6 +189,3 @@
   </script>
 </body>
 </html>
-
-
-
